@@ -13,8 +13,8 @@ rpmConv = 2*pi/60;
 angVel = 35*rpmConv; %constant velocity of 30 rpm
 angPos(t) = int(angVel,t0,0,t);
 
-L = 150;
-a = 63.5;
+L = 190;
+a = 64;
 
 H(t) = pistHeight(L,a,angPos);
 % 
@@ -34,14 +34,24 @@ plot(x, y)
     
 
 sympref('FloatingPointOutput',true);
-inhaleStart = H(4.806)
-inhaleEnd = max(y)
+%inhaleStartX = 
+% inhaleStart = H(x)
+% inhaleEnd = max(y)
+% 
+% inhaleEnd-inhaleStart
+y2 = y(40:200);
+peakY = max(y2);
 
-inhaleEnd-inhaleStart
+xIndex = find(y == peakY, 1, 'first'); %y index of second peak
+secondPeakTime = x(xIndex);
+div5 = (secondPeakTime/5);
+inhaleStartY = H(secondPeakTime - div5);
 
+inhaleDisplacement = peakY - inhaleStartY  % want this to be 55.
+    
 
 % animation:
-
+% 
 % figure;
 % plot([-43 -43],[50 210],'k','LineWidth',3)
 % hold on;
