@@ -1,11 +1,7 @@
 % piston cylinder code for ENME401 LCV assignment
 % leo lloyd 21/05/20
 
-s = 0.1;
-B = 0.05;
-L = 0.15;
-a = 0.05;
-theta = 30;
+clear all, close all, clc
 
 syms pistHeight(L,a,theta)
 pistHeight(L,a,theta) = a*cos(theta) + sqrt(L^2-a^2*sin(theta)^2); % height of piston, i.e. the furthest point from origin
@@ -14,14 +10,35 @@ pistHeight(L,a,theta) = a*cos(theta) + sqrt(L^2-a^2*sin(theta)^2); % height of p
 
 syms t0 t
 rpmConv = 2*pi/60;
-angVel(t0) = 30*rpmConv; %constant velocity of 30 rpm
+angVel = 35*rpmConv; %constant velocity of 30 rpm
 angPos(t) = int(angVel,t0,0,t);
 
-H(t) = pistHeight(150,50,angPos)
+L = 150;
+a = 63.5;
 
-fplot(H(t),[0 10])
-xlabel('Time (sec)')
-ylabel('Height (mm)')
+H(t) = pistHeight(L,a,angPos);
+% 
+% fplot(H(t),[0 10])
+% xlabel('Time (sec)')
+% ylabel('Height (mm)')
+
+count = 1;
+
+for i = 0:0.01:2
+    x(count) = i;
+    y(count) = H(i);
+    count = count + 1;
+end
+
+plot(x, y)
+    
+
+sympref('FloatingPointOutput',true);
+inhaleStart = H(4.806)
+inhaleEnd = max(y)
+
+inhaleEnd-inhaleStart
+
 
 % animation:
 
