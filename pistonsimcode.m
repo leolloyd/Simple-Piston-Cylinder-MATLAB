@@ -10,21 +10,19 @@ pistHeight(L,a,theta) = a*cos(theta) + sqrt(L^2-a^2*sin(theta)^2); % height of p
 
 syms t0 t
 rpmConv = 2*pi/60;
-angVel = 35*rpmConv; %constant velocity of 30 rpm
+angVel = 40*rpmConv; %constant velocity
 angPos(t) = int(angVel,t0,0,t);
 
 L = 190;
-a = 64;
+a = 65;
 
 H(t) = pistHeight(L,a,angPos);
-% 
-% fplot(H(t),[0 10])
-% xlabel('Time (sec)')
-% ylabel('Height (mm)')
 
 count = 1;
 
-for i = 0:0.01:2
+endTime = 5;
+
+for i = 0:0.01:endTime
     x(count) = i;
     y(count) = H(i);
     count = count + 1;
@@ -34,16 +32,11 @@ plot(x, y)
     
 
 sympref('FloatingPointOutput',true);
-%inhaleStartX = 
-% inhaleStart = H(x)
-% inhaleEnd = max(y)
-% 
-% inhaleEnd-inhaleStart
-y2 = y(40:200);
+y2 = y(40:length(y));
 peakY = max(y2);
 
-xIndex = find(y == peakY, 1, 'first'); %y index of second peak
-secondPeakTime = x(xIndex);
+xIndex = find(y2 == peakY, 1, 'first'); %y index of second peak
+secondPeakTime = x(xIndex+(40-1));
 div5 = (secondPeakTime/5);
 inhaleStartY = H(secondPeakTime - div5);
 
@@ -52,14 +45,13 @@ inhaleDisplacement = peakY - inhaleStartY  % want this to be 55.
 
 % animation:
 % 
-% figure;   % uncomment from here if you want to see the animation
+% figure;
 % plot([-43 -43],[50 210],'k','LineWidth',3)
 % hold on;
 % plot([43 43],[50 210],'k','LineWidth',3)
 % plot([-43 43],[210 210],'k','LineWidth',3)
 % axis equal;
 % 
-% as too lazy to fix the view of the cylinder. fix if you want to by changing the coordinates up/down.
 % fanimator(@rectangle,'Position',[-43 H(t) 86 10],'FaceColor',[0.8 0.8 0.8])
 % 
 % fanimator(@(t) plot([0 50*sin(angPos(t))],[H(t) 50*cos(angPos(t))],'r-','LineWidth',3))
