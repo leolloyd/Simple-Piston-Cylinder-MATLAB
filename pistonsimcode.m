@@ -52,13 +52,14 @@ inhaleDisplacement = peakY - inhaleStartY  % want this to be 55.
 
 % animation:
 % 
-% figure;
+% figure;   % uncomment from here if you want to see the animation
 % plot([-43 -43],[50 210],'k','LineWidth',3)
 % hold on;
 % plot([43 43],[50 210],'k','LineWidth',3)
 % plot([-43 43],[210 210],'k','LineWidth',3)
 % axis equal;
 % 
+% as too lazy to fix the view of the cylinder. fix if you want to by changing the coordinates up/down.
 % fanimator(@rectangle,'Position',[-43 H(t) 86 10],'FaceColor',[0.8 0.8 0.8])
 % 
 % fanimator(@(t) plot([0 50*sin(angPos(t))],[H(t) 50*cos(angPos(t))],'r-','LineWidth',3))
